@@ -1,13 +1,13 @@
 const { gql } = require("apollo-server");
+const { buildFederetedSchema } = require("@apollo/federation");
 
 const typeDefs = gql`
-  # Schema definitions go here
-  type Query {
+  extend type Query {
     "Get tracks array for homepage grid with very important info"
     tracksForHome: [Track!]!
   }
   "A track is a group of Modules that teaches about a specific topic"
-  type Track {
+  type Track @keys(fields: "id") {
     id: ID!
     "The track's title"
     title: String!
