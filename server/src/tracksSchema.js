@@ -7,7 +7,7 @@ const typeDefs = gql`
     tracksForHome: [Track!]!
   }
   "A track is a group of Modules that teaches about a specific topic"
-  type Track @keys(fields: "id") {
+  type Track @key(fields: "id") {
     id: ID!
     "The track's title"
     title: String!

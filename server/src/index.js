@@ -1,29 +1,18 @@
 const { ApolloServer, MockList } = require("apollo-server");
-const typeDefs = require("./schema");
-const resolvers = require("./tracksResolvers");
-const TrackAPI = require("./datasources/track-api");
+const {ApolloGateway} = require('@apollo/gateway')
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  dataSources: () => {
-    return {
-      trackAPI: new TrackAPI(),
-    };
-  },
-  context: ({ req }) => {
-    const token = req.headers.authorization || "";
-    console.log(req.headers.authorization);
-
-    if (token != "Bearer 123")
-      throw new AuthenticationError("Please provide a correct bearer token");
-  },
+const gateway = new ApolloGateway({
+  serviceList: [
+    {"name": "tracks", "url": "http://localhost:4001"},
+    {"name": "test", "url": "http://localhost:4002"}
+  ]
 });
 
-server.listen().then(() => {
-  console.log(`
-      🚀  Server is running!
-      🔉  Listening on port 4000
-      📭  Query at https://studio.apollographql.com/dev
-    `);
+const server = new ApolloServer({
+  gateway,
+  subscriptions: false
+});
+
+server.listen().then(({url}) => {
+  console.log(`Main server ready at ${url}`);
 });

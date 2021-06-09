@@ -1,14 +1,13 @@
 const { ApolloServer, MockList } = require("apollo-server");
-const { buildFederetedSchema } = require("@apollo/federation");
-const typeDefs = require("./schema");
+const { buildFederatedSchema } = require("@apollo/federation");
+const typeDefs = require("./tracksSchema");
 const resolvers = require("./tracksResolvers");
 const TrackAPI = require("./datasources/track-api");
 
 const port = 4001;
-const url = "http://localhost:3000";
 
 const server = new ApolloServer({
-  schema: buildFederetedSchema[{ typeDefs, resolvers }],
+  schema: buildFederatedSchema([{ typeDefs, resolvers }]),
   dataSources: () => {
     return {
       trackAPI: new TrackAPI(),
@@ -16,6 +15,6 @@ const server = new ApolloServer({
   },
 });
 
-server.listen({ port }).then((url) => {
+server.listen({ port }).then(({url}) => {
   console.log(`Track server ready at ${url}`);
 });
