@@ -1,12 +1,17 @@
 const resolvers = {
   Query: {
-      test: (_, {p1}) => {
+      cat: (_, {p1}) => {
+        console.log(p1);
         return {
-          id: 1,
-          title: "title " + p1
+          subCat1: () => {
+            return {
+              id: 'id1',
+              title: 'Test ' + p1 
+            }
+          } 
         };
       }
-  }
+  } 
 };
 module.exports = resolvers;
 
