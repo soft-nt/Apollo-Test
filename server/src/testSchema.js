@@ -7,10 +7,11 @@ const typeDefs = gql`
   }
   "A test is a group of Modules that teaches about a specific topic"
   type Cat {
-    subCat1: SubCat1
+    subCat1: SubCat,
+    subCat2: SubCat
   }
 
-  type SubCat1 @key(fields: "id") {
+  type SubCat @key(fields: "id") {
     id: ID!
     title: String!
   }

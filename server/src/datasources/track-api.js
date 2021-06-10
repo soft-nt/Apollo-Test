@@ -6,11 +6,11 @@ class TrackAPI extends RESTDataSource {
         this.baseURL = 'https://odyssey-lift-off-rest-api.herokuapp.com/';
       }
 
-      getTracksForHome() {
+      async getTracksForHome() {
         return this.get('tracks');
       }
 
-      getAuthor(authorId) {
+      async getAuthor(authorId) {
         return this.get(`author/${authorId}`);
       } 
   }
